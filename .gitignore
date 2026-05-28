@@ -4,7 +4,7 @@
 node_modules/
 .pnpm-store/
 pnpm-lock.yaml
-.pnpm-storepnpm
+.pnpm-storepnpm}
 # =========================
 # Build outputs
 # =========================
