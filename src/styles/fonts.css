@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=EB+Garamond:wght@400;500;600&family=Libre+Baskerville:wght@400;700&family=Outfit:wght@300;400;500&display=swap');
+
+:root {
+  --font-serif: 'EB Garamond', serif;
+  --font-baskerville: 'Libre Baskerville', serif;
+  --font-sans: 'Outfit', sans-serif;
+}

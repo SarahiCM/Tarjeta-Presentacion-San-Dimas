@@ -1,0 +1,61 @@
+# =========================
+# Node / Package managers
+# =========================
+node_modules/
+.pnpm-store/
+pnpm-lock.yaml
+.pnpm-storepnpm
+# =========================
+# Build outputs
+# =========================
+dist/
+build/
+
+# =========================
+# Vite
+# =========================
+.vite/
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.local
+.env.*.local
+
+# =========================
+# Logs
+# =========================
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-storepnpm
+
+# =========================
+# TypeScript
+# =========================
+*.tsbuildinfo
+
+# =========================
+# IDEs & Editors
+# =========================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Optional cache
+# =========================
+.cache/
