@@ -298,3 +298,25 @@ body { margin: 0; background: var(--black); font-family: Inter, sans-serif; }
     width: 90px;
   }
 }
+@media (max-width: 800px) {
+  .black-panel {
+    padding: 70px 32px;
+  }
+
+  .brand-mark {
+    margin: 28px 0;
+  }
+
+  .brand-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .gold-line.top {
+    top: 32px;
+  }
+
+  .gold-line.bottom {
+    bottom: 32px;
+  }
+}
