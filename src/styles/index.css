@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
   --black: #080808;
@@ -215,4 +215,62 @@ body { margin: 0; background: var(--black); font-family: Inter, sans-serif; }
   .gold-cut { height: 20px; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .back-footer { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+}
+
+.contact-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gold);
+}
+
+.contact-summary strong {
+  display: block;
+  color: #9a6d23;
+  font-size: 20px;
+}
+
+.contact-summary p {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all .25s ease;
+}
+
+.whatsapp-btn {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+}
+
+.whatsapp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(18, 140, 126, .25);
+}
+
+.maps-btn {
+  background: linear-gradient(135deg, var(--gold), #9a6d23);
+  color: white;
+}
+
+.maps-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(201, 154, 56, .25);
 }
