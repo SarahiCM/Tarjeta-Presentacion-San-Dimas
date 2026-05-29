@@ -1,5 +1,6 @@
 import React from 'react';
 import { MessageCircle, MapPin, Phone } from 'lucide-react';
+import logo from '../../assets/images/FunerariaLogo.png';
 type Service = {
   icon: string;
   title: string;
@@ -21,20 +22,7 @@ type BusinessCardProps = {
   services: Service[];
 };
 
-function QRBox() {
-  return (
-    <div className="qr-box">
-      <div className="qr-grid">
-        {Array.from({ length: 64 }).map((_, i) => (
-          <span
-            key={i}
-            className={(i * 7 + i) % 3 === 0 ? 'black' : ''}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
+
 
 export function JewelryBusinessCard({
   brand,
@@ -61,8 +49,13 @@ export function JewelryBusinessCard({
             <div className="black-panel">
               <div className="gold-line top" />
 
-              <div className="brand-mark">✟</div>
-
+              <div className="brand-mark">
+                  <img
+            src={logo}
+            alt="San Dimas"
+            className="brand-logo"
+          />
+        </div>
               <h2>{brand}</h2>
               <p>{category}</p>
 
