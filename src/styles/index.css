@@ -73,17 +73,17 @@ body { margin: 0; background: var(--black); font-family: Inter, sans-serif; }
 }
 
 .brand-mark {
-  width: 86px;
-  height: 86px;
-  border: 2px solid var(--gold);
-  border-radius: 50%;
-  color: var(--light-gold);
-  display: grid;
-  place-items: center;
-  font-size: 42px;
   margin-bottom: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.brand-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
 .black-panel h2,
 .back-card h2 {
   font-family: Cinzel, serif;
@@ -99,9 +99,23 @@ body { margin: 0; background: var(--black); font-family: Inter, sans-serif; }
   font-size: 28px;
   font-style: italic;
 }
-.gold-line { width: 120px; height: 1px; background: var(--gold); opacity: .75; position: absolute; }
-.gold-line.top { top: 42px; }
-.gold-line.bottom { bottom: 42px; }
+.gold-line {
+  width: 120px;
+  height: 1px;
+  background: var(--gold);
+  opacity: .75;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.gold-line.top {
+  top: 42px;
+}
+
+.gold-line.bottom {
+  bottom: 42px;
+}
 
 .gold-cut {
   background: linear-gradient(135deg, transparent 0 30%, var(--gold) 31% 60%, #7a5520 61% 100%);
@@ -273,4 +287,14 @@ body { margin: 0; background: var(--black); font-family: Inter, sans-serif; }
 .maps-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(201, 154, 56, .25);
+}
+@media (max-width: 800px) {
+  .brand-logo {
+    width: 75px;
+    height: 75px;
+  }
+
+  .gold-line {
+    width: 90px;
+  }
 }
