@@ -108,7 +108,7 @@ function CardFront({ brand, category, owner, role, phone, address }: BusinessCar
 }
 
 // ─── BACK ─────────────────────────────────────────────────────────────────────
-function CardBack({ phone, services, whatsapp, address }: BusinessCardProps) {
+function CardBack({ phone, services }: BusinessCardProps) {
   return (
     <div style={{
       position: 'absolute', inset: 0,
@@ -117,7 +117,7 @@ function CardBack({ phone, services, whatsapp, address }: BusinessCardProps) {
       background: 'linear-gradient(145deg, #fbfaf7, #f0ece4)',
       border: '1px solid rgba(201,154,56,.45)',
       boxShadow: '0 28px 80px rgba(0,0,0,.45)',
-      padding: '28px 32px 24px',
+      padding: '18px 22px 16px',
       boxSizing: 'border-box',
       backfaceVisibility: 'hidden',
       WebkitBackfaceVisibility: 'hidden',
@@ -126,45 +126,46 @@ function CardBack({ phone, services, whatsapp, address }: BusinessCardProps) {
       {/* Title */}
       <h2 style={{
         fontFamily: '"Cinzel", serif', color: '#9a6d23',
-        textAlign: 'center', margin: '0 0 8px',
-        fontSize: 'clamp(16px, 2.2vw, 28px)', letterSpacing: '0.18em',
+        textAlign: 'center', margin: '0 0 6px',
+        fontSize: 'clamp(13px, 2vw, 22px)', letterSpacing: '0.2em',
       }}>Nuestros Servicios</h2>
 
-      {/* Ornament line */}
+      {/* Ornament */}
       <div style={{
-        width: 200, height: 1,
+        width: 160, height: 1,
         background: 'linear-gradient(90deg, transparent, #c99a38, transparent)',
-        margin: '0 auto 20px',
+        margin: '0 auto 14px',
       }} />
 
-      {/* Services grid */}
+      {/* Services grid — 4×2, fills remaining space */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '12px 10px',
+        gridTemplateRows: 'repeat(2, 1fr)',
+        gap: '8px',
         flex: 1,
         minHeight: 0,
       }}>
         {services.map((service) => (
           <div key={service.title} style={{
             border: '1px solid rgba(201,154,56,.35)',
-            borderRadius: 14,
-            padding: '14px 8px',
+            borderRadius: 12,
+            padding: '8px 6px',
             textAlign: 'center',
             background: 'rgba(255,255,255,.68)',
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center',
-            gap: 8,
+            gap: 6,
           }}>
             <div style={{
-              width: 42, height: 42,
+              width: 36, height: 36,
               borderRadius: '50%',
               background: '#080808', color: '#c99a38',
               display: 'grid', placeItems: 'center',
-              fontSize: 20, flexShrink: 0,
+              fontSize: 17, flexShrink: 0,
             }}>{service.icon}</div>
             <p style={{
-              margin: 0, fontSize: 'clamp(8px, 1vw, 11px)',
+              margin: 0, fontSize: 'clamp(7px, 0.9vw, 10px)',
               textTransform: 'uppercase', lineHeight: 1.3,
               fontWeight: 700, whiteSpace: 'pre-line',
               color: '#080808',
@@ -173,68 +174,25 @@ function CardBack({ phone, services, whatsapp, address }: BusinessCardProps) {
         ))}
       </div>
 
-      {/* Footer */}
+      {/* Footer — phone only, no buttons (they live outside the card) */}
       <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderTop: '1px solid rgba(201,154,56,.45)',
-        marginTop: 16, paddingTop: 14,
-        gap: 16,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        borderTop: '1px solid rgba(201,154,56,.35)',
+        marginTop: 12, paddingTop: 10, gap: 10,
+        color: '#c99a38',
       }}>
-        {/* Phone info */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: '#c99a38', flexShrink: 0 }}>
-          <Phone size={18} />
-          <div>
-            <strong style={{ display: 'block', color: '#9a6d23', fontSize: 'clamp(14px, 1.8vw, 20px)', fontFamily: '"Cinzel", serif' }}>{phone}</strong>
-            <span style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.14em', color: '#7a5520', fontWeight: 700 }}>Atención 24/7</span>
-          </div>
-        </div>
-
-        {/* Action buttons */}
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-          <a
-            href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'flex', alignItems: 'center', gap: 7,
-              padding: '9px 16px', borderRadius: 999,
-              background: 'linear-gradient(135deg, #25D366, #128C7E)',
-              color: '#fff', textDecoration: 'none',
-              fontWeight: 600, fontSize: 'clamp(10px, 1.2vw, 13px)',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            <MessageCircle size={14} />
-            WhatsApp
-          </a>
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address.join(' '))}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'flex', alignItems: 'center', gap: 7,
-              padding: '9px 16px', borderRadius: 999,
-              background: 'linear-gradient(135deg, #c99a38, #9a6d23)',
-              color: '#fff', textDecoration: 'none',
-              fontWeight: 600, fontSize: 'clamp(10px, 1.2vw, 13px)',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            <Navigation size={14} />
-            Cómo llegar
-          </a>
-        </div>
+        <Phone size={15} />
+        <strong style={{ color: '#9a6d23', fontSize: 'clamp(13px, 1.8vw, 18px)', fontFamily: '"Cinzel", serif' }}>{phone}</strong>
+        <span style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.14em', color: '#7a5520', fontWeight: 700 }}>· Atención 24/7</span>
       </div>
     </div>
   )
 }
 
 // ─── FLIPPABLE ────────────────────────────────────────────────────────────────
-// Standard business card ratio: 3.5" × 2" = 1.75:1
+// Slightly taller ratio than standard (1.45:1) to fit services grid + footer
 const CARD_W = 680
-const CARD_H = 388
+const CARD_H = 470
 
 function FlippableCard(props: BusinessCardProps) {
   const [flipped, setFlipped] = useState(false)
