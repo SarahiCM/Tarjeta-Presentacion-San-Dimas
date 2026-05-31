@@ -19,7 +19,6 @@ type BusinessCardProps = {
 // ─── FRONT ────────────────────────────────────────────────────────────────────
 function CardFront({ brand, category, owner, role, phone, address, isMobile }: BusinessCardProps & { isMobile: boolean }) {
   if (isMobile) {
-    // Mobile: stacked vertically
     return (
       <div style={{
         position: 'absolute', inset: 0,
@@ -57,13 +56,15 @@ function CardFront({ brand, category, owner, role, phone, address, isMobile }: B
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
               <span style={{ color: '#c99a38', fontSize: 18 }}>⌖</span>
               <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5 }}>
-                {address.map((line, i) => <React.Fragment key={i}>{line}{i < address.length - 1 && <br />}</React.Fragment>)}
+                {address.map((line, i) => (
+                  <React.Fragment key={i}>{line}{i < address.length - 1 && <br />}</React.Fragment>
+                ))}
               </p>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   // Desktop: side by side
@@ -101,19 +102,22 @@ function CardFront({ brand, category, owner, role, phone, address, isMobile }: B
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
             <span style={{ color: '#c99a38', fontSize: 18 }}>⌖</span>
             <p style={{ margin: 0, fontSize: 'clamp(10px, 1.2vw, 14px)', lineHeight: 1.5 }}>
-              {address.map((line, i) => <React.Fragment key={i}>{line}{i < address.length - 1 && <br />}</React.Fragment>)}
+              {address.map((line, i) => (
+                <React.Fragment key={i}>{line}{i < address.length - 1 && <br />}</React.Fragment>
+              ))}
             </p>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // ─── BACK ─────────────────────────────────────────────────────────────────────
 function CardBack({ phone, services, isMobile }: BusinessCardProps & { isMobile: boolean }) {
-  const cols = isMobile ? 2 : 4
-  const rows = isMobile ? 4 : 2
+  // Mobile: 2 cols × 4 rows — each cell needs enough room, so font/icon scale down
+  const cols = isMobile ? 2 : 4;
+  const rows = Math.ceil(services.length / cols);
 
   return (
     <div style={{
@@ -122,7 +126,7 @@ function CardBack({ phone, services, isMobile }: BusinessCardProps & { isMobile:
       borderRadius: 16, overflow: 'hidden',
       background: 'linear-gradient(145deg, #fbfaf7, #f0ece4)',
       border: '1px solid rgba(201,154,56,.45)',
-      padding: isMobile ? '16px 14px 14px' : '14px 18px 12px',
+      padding: isMobile ? '14px 12px 12px' : '14px 18px 12px',
       boxSizing: 'border-box',
       backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
       transform: 'rotateY(180deg)',
@@ -131,15 +135,17 @@ function CardBack({ phone, services, isMobile }: BusinessCardProps & { isMobile:
       <h2 style={{
         fontFamily: '"Cinzel",serif', color: '#9a6d23',
         textAlign: 'center', margin: '0 0 5px',
-        fontSize: isMobile ? 16 : 'clamp(12px, 1.8vw, 20px)',
-        letterSpacing: '0.2em',
+        fontSize: isMobile ? 13 : 'clamp(12px, 1.8vw, 20px)',
+        letterSpacing: '0.18em',
+        flexShrink: 0,
       }}>Nuestros Servicios</h2>
 
       {/* Ornament */}
       <div style={{
-        width: 140, height: 1,
+        width: 120, height: 1,
         background: 'linear-gradient(90deg, transparent, #c99a38, transparent)',
-        margin: '0 auto 12px',
+        margin: '0 auto 10px',
+        flexShrink: 0,
       }} />
 
       {/* Services grid */}
@@ -147,33 +153,45 @@ function CardBack({ phone, services, isMobile }: BusinessCardProps & { isMobile:
         display: 'grid',
         gridTemplateColumns: `repeat(${cols}, 1fr)`,
         gridTemplateRows: `repeat(${rows}, 1fr)`,
-        gap: isMobile ? '6px' : '6px',
-        flex: 1, minHeight: 0,
+        gap: isMobile ? '5px' : '6px',
+        flex: 1,
+        minHeight: 0,
       }}>
         {services.map((service) => (
           <div key={service.title} style={{
             border: '1px solid rgba(201,154,56,.3)',
-            borderRadius: 10,
-            padding: '6px 4px',
+            borderRadius: 8,
+            padding: isMobile ? '6px 4px' : '6px 4px',
             textAlign: 'center',
             background: 'rgba(255,255,255,.7)',
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center',
-            gap: 5,
+            gap: 4,
+            minHeight: 0,
+            overflow: 'hidden',
           }}>
             <div style={{
-              width: isMobile ? 34 : 30, height: isMobile ? 34 : 30,
+              width: isMobile ? 30 : 30,
+              height: isMobile ? 30 : 30,
               borderRadius: '50%',
               background: '#080808', color: '#c99a38',
               display: 'grid', placeItems: 'center',
-              fontSize: isMobile ? 16 : 15, flexShrink: 0,
+              fontSize: isMobile ? 14 : 15,
+              flexShrink: 0,
             }}>{service.icon}</div>
             <p style={{
               margin: 0,
-              fontSize: isMobile ? 8 : 'clamp(6px, 0.8vw, 9px)',
-              textTransform: 'uppercase', lineHeight: 1.3,
-              fontWeight: 700, color: '#080808',
-            }}>{service.title}</p>
+              fontSize: isMobile ? '7px' : 'clamp(6px, 0.8vw, 9px)',
+              textTransform: 'uppercase',
+              lineHeight: 1.3,
+              fontWeight: 700,
+              color: '#080808',
+              // clamp text to 3 lines max so it never overflows the cell
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            } as React.CSSProperties}>{service.title}</p>
           </div>
         ))}
       </div>
@@ -182,52 +200,62 @@ function CardBack({ phone, services, isMobile }: BusinessCardProps & { isMobile:
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         borderTop: '1px solid rgba(201,154,56,.3)',
-        marginTop: 10, paddingTop: 8, gap: 8, color: '#c99a38',
+        marginTop: 8, paddingTop: 7,
+        gap: 8, color: '#c99a38',
         flexShrink: 0,
       }}>
         <Phone size={13} />
-        <strong style={{ color: '#9a6d23', fontSize: isMobile ? 15 : 'clamp(12px, 1.5vw, 16px)', fontFamily: '"Cinzel",serif' }}>{phone}</strong>
+        <strong style={{ color: '#9a6d23', fontSize: isMobile ? 14 : 'clamp(12px, 1.5vw, 16px)', fontFamily: '"Cinzel",serif' }}>{phone}</strong>
         <span style={{ fontSize: 8, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#7a5520', fontWeight: 700 }}>· Atención 24/7</span>
       </div>
     </div>
-  )
+  );
 }
 
 // ─── FLIPPABLE ────────────────────────────────────────────────────────────────
 function FlippableCard(props: BusinessCardProps) {
-  const [flipped, setFlipped] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [flipped, setFlipped] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 600)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
+    const check = () => setIsMobile(window.innerWidth < 600);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
-  // Heights: mobile front taller (stacked), back even taller (4 rows)
-  const frontH = isMobile ? 380 : 340
-  const backH  = isMobile ? 560 : 340
-  const cardH  = flipped ? backH : frontH
+  const cols = isMobile ? 2 : 4;
+  const rows = Math.ceil(props.services.length / cols);
+
+  // Heights computed to fit content without clipping
+  // Front mobile: logo area ~160px + contact area ~220px = 380px
+  // Back mobile: title ~40px + grid(rows × ~70px) + footer ~45px + padding ~28px
+  const backH = isMobile
+    ? 40 + rows * 72 + 45 + 28
+    : 340;
+  const frontH = isMobile ? 380 : 340;
+  const cardH = flipped ? backH : frontH;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, width: '100%' }}>
 
       {/* Labels */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        {['Frente', '⟷', 'Reverso'].map((t, i) => (
+        {(['Frente', '⟷', 'Reverso'] as const).map((t, i) => (
           <span key={i} style={{
             fontFamily: i === 1 ? undefined : '"Cinzel",serif',
             fontSize: i === 1 ? 12 : 9,
             letterSpacing: i === 1 ? undefined : '0.24em',
             textTransform: i === 1 ? undefined : 'uppercase',
-            color: i === 1 ? '#555' : (i === 0 ? (flipped ? '#555' : '#e2c16f') : (flipped ? '#e2c16f' : '#555')),
+            color: i === 1 ? '#555'
+              : i === 0 ? (flipped ? '#555' : '#e2c16f')
+              : (flipped ? '#e2c16f' : '#555'),
             transition: 'color 0.35s',
           }}>{t}</span>
         ))}
       </div>
 
-      {/* Card wrapper — height animates between front/back */}
+      {/* Card wrapper */}
       <div style={{
         width: '100%', maxWidth: 680,
         height: cardH,
@@ -264,8 +292,10 @@ function FlippableCard(props: BusinessCardProps) {
       </p>
 
       {/* Action buttons */}
-      <div style={{ display: 'flex', gap: 12, marginTop: 4 }}>
-        <a href={`https://wa.me/${props.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer"
+      <div style={{ display: 'flex', gap: 12, marginTop: 4, flexWrap: 'wrap', justifyContent: 'center' }}>
+        <a
+          href={`https://wa.me/${props.whatsapp.replace(/\D/g, '')}`}
+          target="_blank" rel="noopener noreferrer"
           style={{
             display: 'flex', alignItems: 'center', gap: 8,
             background: '#111', border: '1px solid rgba(37,211,102,0.5)',
@@ -273,13 +303,15 @@ function FlippableCard(props: BusinessCardProps) {
             color: '#25d366', fontFamily: '"Cinzel",serif',
             fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', textDecoration: 'none',
           }}
-          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(37,211,102,0.1)' }}
-          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#111' }}
+          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(37,211,102,0.1)'; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#111'; }}
         >
           <MessageCircle size={13} strokeWidth={1.8} />
           WhatsApp
         </a>
-        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(props.address.join(' '))}`} target="_blank" rel="noopener noreferrer"
+        <a
+          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(props.address.join(' '))}`}
+          target="_blank" rel="noopener noreferrer"
           style={{
             display: 'flex', alignItems: 'center', gap: 8,
             background: '#111', border: '1px solid rgba(66,133,244,0.5)',
@@ -287,15 +319,15 @@ function FlippableCard(props: BusinessCardProps) {
             color: '#4285f4', fontFamily: '"Cinzel",serif',
             fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', textDecoration: 'none',
           }}
-          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(66,133,244,0.1)' }}
-          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#111' }}
+          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(66,133,244,0.1)'; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#111'; }}
         >
           <Navigation size={13} strokeWidth={1.8} />
           Cómo llegar
         </a>
       </div>
     </div>
-  )
+  );
 }
 
 // ─── EXPORT ───────────────────────────────────────────────────────────────────
@@ -315,7 +347,7 @@ export function JewelryBusinessCard(props: BusinessCardProps) {
         <FlippableCard {...props} />
       </section>
     </main>
-  )
+  );
 }
 
-export default JewelryBusinessCard
+export default JewelryBusinessCard;
